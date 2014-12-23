@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title id='Description'>ZONAS</title>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/reset.css" type="text/css" />
+    <link rel="stylesheet" href="styles/app.css" type="text/css" />
+    <link rel="stylesheet" href="jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqx-all.js"></script>
+    <script type="text/javascript">
+	
+        $(document).ready(function () 
+		{
+		
+            $("#b1").jqxButton({ width: '80', height: 16 });			
+            $("#b2").jqxButton({ width: '80', height: 16 });			
+            $("#b3").jqxButton({ width: '80', height: 16 });			
+            $("#b4").jqxButton({ width: '80', height: 16 });			
+
+            $("#rcodigo").jqxRadioButton({ width: 50, height: 15, checked: true });
+            $("#rdescripcion").jqxRadioButton({ width: 80, height: 15 });
+			$("#dato").jqxInput({height: 23, width: 200, minLength: 1 });	
+
+			$("#codigo").jqxInput({height: 23, width: 100, minLength: 1 });	
+			$("#descripcion").jqxInput({height: 23, width: 200, minLength: 1 });	
+			$("#responsable").jqxInput({height: 23, width: 200, minLength: 1 });	
+			
+            $("#buscar").jqxButton({ width: '40', height: 16 });			
+			
+            $('#jqxTabs').jqxTabs({ height: 248, width: 358 });			
+			
+
+            var source =
+            {
+				datatype: "json",
+                datafields:
+                [
+                    { name: 'codigo', type: 'string' },
+                    { name: 'descripcion', type: 'string' },
+                    { name: 'representante', type: 'string' },
+                    { name: 'esActivo', type: 'number' }
+                ],
+				url: 'webserver.php?srv=list_clientes_zonas',
+                addrow: function (rowid, rowdata, position, commit) {
+                    commit(true);
+                },
+                deleterow: function (rowid, commit) {
+                    commit(true);
+                },
+                updaterow: function (rowid, newdata, commit) {
+                    commit(true);
+                }
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);			
+            dataAdapter.dataBind();			
+
+			
+			$("#jqxgrid").jqxGrid(
+            {
+                width: 350,
+                height: 248,
+                altrows: true,
+                source: dataAdapter,
+                showtoolbar: false,
+                rendertoolbar: function (toolbar) 
+				{
+                    var me = this;
+                },
+                columns: 
+				[
+                  { text: 'Codigo', datafield: 'codigo', width: 100, cellsalign: 'left'},
+                  { text: 'Descripcion', datafield: 'descripcion', width: 250, cellsalign: 'left' }
+                ],
+            });  			
+			
+
+            $("#salida").jqxButton({ width: '100', height: 16 });		
+			$("#salida").bind('click', function () 
+            {
+				close();
+            });
+			
+        });
+    </script>
+	
+	
+	
+</head>
+<body class='default'>
+</body>
+
+
+    <div id='jqxWidget' style="font-size: 13px; font-family: Arial;">
+
+		<div style='float: left; width: 710px;'>
+            <div style='margin-left: 0px; float: left; width: 85px; background: #486974;'>
+				<div id='b1'>
+					<img style='float: left; margin: 0px;' src='../images/add.png' />
+					<div style='float: left; margin: 0px;'>Nuevo</div>
+				</div>
+			</div>
+            <div style='margin-left: 0px; float: left; width: 85px; background: #486974;'>
+				<div id='b2'>
+					<img style='float: left; margin: 0px;' src='../images/notepad.png' />
+					<div style='float: left; margin: 0px;'>Editar</div>
+				</div>
+			</div>
+            <div style='margin-left: 0px; float: left; width: 85px; background: #486974;'>
+				<div id='b3'>
+					<img style='float: left; margin: 0px;' src='../images/refresh.png' />
+					<div style='float: left; margin: 0px;'>Guardar</div>
+				</div>
+			</div>
+            <div style='margin-left: 0px; float: left; width: 85px; background: #486974;'>
+				<div id='b4'>
+					<img style='float: left; margin: 0px;' src='../images/close.png' />
+					<div style='float: left; margin: 0px;'>Borrar</div>
+				</div>
+			</div>
+            <div style='font-size: 20px; font-family: Arial; margin-left: 0px; margin-right: 0px; float: left; text-align: right; width: 370px; height: 25px; background: #368ba7;'>
+                <font color=ffffff>Control de Zonas </font>
+			</div>
+        </div>
+
+		<div style='margin-top: 2px; float: left; width: 710px; background: #fafafa;'>
+            <div style='margin-left: 0px; float: left; width: 80px; height: 25px;'>
+				<div style='margin-top: 5px;'>Buscar por:</div>			
+			</div>
+            <div style='margin-left: 0px; float: left; width: 70px; height: 25px;'>
+				<div style='margin-top: 5px;' id='rcodigo'>Codigo</div>			
+			</div>
+            <div style='margin-left: 0px; float: left; width: 200px; height: 25px;'>
+				<div style='margin-top: 5px;' id='rdescripcion'>Descripcion</div>			
+			</div>
+            <div style='font-size: 13px; font-family: Arial; margin-left: 10px; margin-top: 5px; float: left; width: 80px; height: 20px;'>
+                <font color=0000ff>*Codigo:</font>
+			</div>
+            <div style='margin-left: 0px; float: left; width: 270px; height: 25px;'>
+				<input type="text" id="codigo"/>	
+			</div>
+        </div>
+
+		<div style='float: left; width: 710px; background: #fafafa;'>
+            <div style='margin-left: 0px; float: left; width: 80px; height: 25px;'>
+				<div style='margin-top: 5px;'>Buscar:</div>			
+			</div>
+            <div style='margin-left: 0px; float: left; width: 200px; height: 25px;'>
+				<input type="text" id="dato"/>	
+			</div>
+            <div style='margin-left: 0px; float: left; width: 70px; height: 23px;'>	
+				<div id='buscar'>
+					<img style='float: left; margin: 0px;' src='../images/search.png' />
+					<div style='float: left; margin: 0px;'></div>
+				</div>
+			</div>
+            <div style='font-size: 13px; font-family: Arial; margin-left: 10px; margin-top: 5px; float: left; width: 80px; height: 20px;'>
+                <font color=0000ff>*Descripcion:</font>
+			</div>
+            <div style='margin-left: 0px; float: left; width: 270px; height: 25px;'>
+				<input type="text" id="descripcion"/>	
+			</div>
+        </div>
+
+		<div style='margin-top: 2px; float: left; width: 710px; background: #ffffff;'>
+            <div style='margin-left: 0px; float: left; width: 350px;'>
+				<div id="jqxgrid"></div>
+			</div>
+            <div style='margin-left: 2px; margin-right: 0px; float: left; text-align: right; width: 358px;'>
+				<div id='jqxTabs' style="float: left;">
+					<ul style="margin-left: 0px;" id="unorderedList">
+						<li>Datos Basicos</li>
+						<li>Extra</li>
+					</ul>
+					<div>
+						<div style='margin-top: 2px; float: left; width: 358px;'>
+							<div style='font-size: 13px; font-family: Arial; margin-left: 10px; margin-top: 15px; float: left; width: 80px; height: 20px;'>
+								<font color=0000ff>Responsable:</font>
+							</div>
+							<div style='margin-left: 0px; margin-top: 10px; float: left; width: 200px; height: 25px;'>
+								<input type="text" id="responsable"/>	
+							</div>
+						</div>
+						<div style='margin-top: 2px; float: left; width: 358px;'>
+							<div style='font-size: 13px; font-family: Arial; margin-left: 10px; margin-top: 0px; float: left; width: 80px; height: 20px;'>
+								<font color=0000ff>Activo:</font>
+							</div>
+							<div style='margin-left: 0px; margin-top: 0px; float: left; width: 200px; height: 25px;'>
+								<input type="text" id="responsable"/>	
+							</div>
+						</div>
+					</div>
+					<div>
+					</div>
+				</div>
+			</div>
+        </div>
+		
+		
+		<div style='float: left; width: 710px; margin-top: 2px; background: #e0e0e0;'>
+            <div style='margin-left: 0px; float: left; width: 600px; height: 25px;'>
+				<div style='margin-top: 5px;'>8 registros encontrados</div>			
+			</div>
+            <div style='font-size: 13px; font-family: Arial; margin-left: 0px; margin-right: 0px; float: left; text-align: right; width: 100px; height: 25px;'>
+				<div id='salida'>
+					<img style='float: left; margin: 0px;' src='../images/close.png' />
+					<div style='float: left; margin: 0px;'>Salida</div>
+				</div>
+			</div>
+		</div>	
+		
+    </div>
+			
+</html>

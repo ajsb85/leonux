@@ -1,10 +1,10 @@
 
 <?php
 
-// Muestra toda la información, por defecto INFO_ALL
+// Muestra toda la informaciÃ³n, por defecto INFO_ALL
 phpinfo();
 
-// Muestra solamente la información de los módulos.
+// Muestra solamente la informaciÃ³n de los mÃ³dulos.
 // phpinfo(8) hace exactamente lo mismo.
 phpinfo(INFO_MODULES);
 
